@@ -1,7 +1,9 @@
 %define lua_version %(lua -e 'print(_VERSION)' | cut -d ' ' -f 2)
 %define lua_archdir %{_libdir}/lua/%{lua_version}
+%global lua_libdir %{_libdir}/lua/%{lua_version}
+
 Name:           lua-mpack
-Version:        1.0.2
+Version:        1.0.4
 Release:        1
 Summary:        Implementation of MessagePack for Lua 5.1
 License:        MIT
@@ -19,14 +21,29 @@ both the msgpack and msgpack-rpc specifications.
 
 %prep
 %setup -q -n libmpack-%{version}
-sed -i 's!luaL_reg!luaL_Reg!g' binding/lua/lmpack.c
+
+# hack to export flags
+pushd binding/lua
+echo '#!/bin/sh' > ./configure
+chmod +x ./configure
+popd
 
 %build
-%{__cc} %{optflags} -I%{_includedir}/lua/%{lua_version} -shared -fPIC -o mpack.so binding/lua/lmpack.c
+pushd binding/lua
+%configure
+%make %{?_smp_mflags} \
+     USE_SYSTEM_LUA=yes \
+     LUA_VERSION_MAJ_MIN=%{lua_version} \
+     LUA_LIB=$(pkg-config --libs lua)
+popd
 
 %install
-mkdir   -p     %{buildroot}%{lua_archdir}
-install -Dm755 mpack.so %{buildroot}%{lua_archdir}
+pushd binding/lua
+%make USE_SYSTEM_LUA=yes \
+     LUA_CMOD_INSTALLDIR=%{lua_libdir} \
+     DESTDIR=%{buildroot} \
+     install
+popd
 
 %files
 %doc LICENSE-MIT README.md
