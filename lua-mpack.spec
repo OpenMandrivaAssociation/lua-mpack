@@ -4,7 +4,7 @@
 
 Name:           lua-mpack
 Version:        1.0.4
-Release:        1
+Release:        2
 Summary:        Implementation of MessagePack for Lua 5.1
 License:        MIT
 Group:          Development/Other
