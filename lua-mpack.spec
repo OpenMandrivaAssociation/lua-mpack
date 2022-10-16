@@ -7,7 +7,7 @@
 %global luajit_libdir %{_libdir}/lua/%{luajit_version}
 
 Name:           lua-mpack
-Version:        1.0.8
+Version:        1.0.9
 Release:        1
 Summary:        Implementation of MessagePack for Lua
 License:        MIT
