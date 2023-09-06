@@ -38,6 +38,7 @@ both the msgpack and msgpack-rpc specifications.
 %build
 %make_build %{?_smp_mflags} \
 	USE_SYSTEM_LUA=yes \
+	CC="%{__cc}" \
 	CFLAGS="%{optflags}" \
 	LUA_VERSION_MAJ_MIN=%{lua_version} \
 	LUA_LIB=$(pkg-config --libs lua) \
@@ -48,6 +49,7 @@ mv mpack.so mpack.so.lua
 
 %make_build %{?_smp_mflags} \
 	USE_SYSTEM_LUA=yes \
+	CC="%{__cc}" \
 	CFLAGS="%{optflags}" \
 	LUA_VERSION_MAJ_MIN=%{luajit_version} \
 	LUA_IMPL=luajit \
