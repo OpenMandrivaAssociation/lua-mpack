@@ -15,6 +15,7 @@ Group:          Development/Other
 Url:            https://github.com/libmpack/libmpack-lua
 Source:         https://github.com/libmpack/libmpack-lua/archive/refs/tags/%{version}.tar.gz
 Source1:	https://github.com/tarruda/libmpack/archive/1.0.5.tar.gz
+BuildRequires:	make
 BuildRequires:  libtool
 BuildRequires:  lua-devel
 Requires:       lua
